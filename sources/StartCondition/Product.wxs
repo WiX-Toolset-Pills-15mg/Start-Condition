@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="Start Condition WiX Pill" Language="1033" Version="1.0.0.0" Manufacturer="Dust in the Wind" UpgradeCode="ff4b4e10-afe1-49bc-a8c5-ede60377172d">
+	<Product Id="*" Name="Start Condition - WiX Toolset Pill" Language="1033" Version="1.0.0.0" Manufacturer="Dust in the Wind" UpgradeCode="ff4b4e10-afe1-49bc-a8c5-ede60377172d">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />

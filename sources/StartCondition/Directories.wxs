@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="ProgramFilesFolder">
                 <Directory Id="ManufacturerFolder" Name="Dust in the Wind">
-                    <Directory Id="INSTALLDIR" Name="Start Condition WiX Pill" />
+                    <Directory Id="INSTALLDIR" Name="Start Condition - WiX Toolset Pill" />
                 </Directory>
             </Directory>
         </Directory>
