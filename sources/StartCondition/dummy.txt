@@ -1,0 +1,4 @@
+WiX Toolset Pills - Start Condition
+==============================================================================
+
+This is a dummy file.

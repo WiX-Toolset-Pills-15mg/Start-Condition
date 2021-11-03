@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+WixQ
+Copyright (C) 2019 Dust in the Wind
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="Start Condition WiX Pill" Language="1033" Version="1.0.0.0" Manufacturer="Dust in the Wind" UpgradeCode="ff4b4e10-afe1-49bc-a8c5-ede60377172d">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+        <Property Id="IS_CONDITION_TRUE" Value="no"/>
+
+        <Condition Message="The time is odd. The installer will not continue.">
+            <!-- This condition will let the installer continue only if the value inside the body is true. -->
+            <!--
+            The intention is to run this check only on the installation scenario.
+            So, if the application is already installed, the condition should be automatically true.
+            This is done by the "Installed OR (NOT Installed AND (...))" part.
+            -->
+            <![CDATA[Installed OR (NOT Installed AND (IS_CONDITION_TRUE = "yes"))]]>
+        </Condition>
+
+		<Feature Id="ProductFeature" Title="StartCondition" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+        
+        <!-- This is the reference to the dll containing the actual implementation of the custom actions. -->
+        <!-- It is needed in the CustomAction tags. -->
+        <Binary Id="CustomActionsBinary" SourceFile="$(var.StartCondition.CustomActions.TargetDir)$(var.StartCondition.CustomActions.TargetName).CA.dll" />
+
+        <InstallUISequence>
+            <!-- The custom action is making the actual verification and is setting the result "yes" or "no" in the IS_CONDITION_TRUE property. -->
+            <!--
+            It is needed to run the custom action on client side and set the IS_CONDITION_TRUE property before the conditions are checked.
+            That is before the LaunchConditions custom action is executed.
+            
+            Note: The LaunchConditions custom action is automatically added by WiX.
+            -->
+            <Custom Action="SystemTimeVerification" Before="LaunchConditions">NOT Installed</Custom>
+        </InstallUISequence>
+
+        <InstallExecuteSequence>
+            <!-- It is also needed to run the custom action on server side for the situation when the installer is run in quiet mode, without GUI. -->
+            <!--
+            Running the custom action on server side is unnecessary if the application is started with GUI. It will just do same thing again. Waste of processor power and time.
+            To prevent running the custom action twice in this situation, see the ConditionVerification.wxs file. It is there where the trick is implemented.
+            -->
+            <Custom Action="SystemTimeVerification" Before="LaunchConditions">NOT Installed</Custom>
+        </InstallExecuteSequence>
+
+	</Product>
+</Wix>

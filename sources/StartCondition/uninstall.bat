@@ -1,0 +1,1 @@
+msiexec /x StartCondition.msi /l*vx uninstall.log
