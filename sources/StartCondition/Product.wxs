@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-Wix Toolset Pills 15mg
+WiX Toolset Pills 15mg
 Copyright (C) 2019-2021 Dust in the Wind
 
 This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="Start Condition - WiX Toolset Pill" Language="1033" Version="1.0.0.0" Manufacturer="Dust in the Wind" UpgradeCode="ff4b4e10-afe1-49bc-a8c5-ede60377172d">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Product
+        Id="*"
+        Name="Start Condition - WiX Toolset Pill"
+        Language="1033"
+        Version="1.0.0.0"
+        Manufacturer="Dust in the Wind"
+        UpgradeCode="ff4b4e10-afe1-49bc-a8c5-ede60377172d">
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+        <Package
+            InstallerVersion="200"
+            Compressed="yes"
+            InstallScope="perMachine" />
 
-        <Property Id="IS_CONDITION_TRUE" Value="no"/>
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+        <MediaTemplate />
+
+        <Property Id="IS_CONDITION_TRUE" Value="no" />
 
         <Condition Message="The time is odd. The installer will not continue.">
             <!-- This condition will let the installer continue only if the value inside the body is true. -->
@@ -37,13 +47,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <![CDATA[Installed OR (NOT Installed AND (IS_CONDITION_TRUE = "yes"))]]>
         </Condition>
 
-		<Feature Id="ProductFeature" Title="StartCondition" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
-        
-        <!-- This is the reference to the dll containing the actual implementation of the custom actions. -->
-        <!-- It is needed in the CustomAction tags. -->
-        <Binary Id="CustomActionsBinary" SourceFile="$(var.StartCondition.CustomActions.TargetDir)$(var.StartCondition.CustomActions.TargetName).CA.dll" />
+        <Feature Id="ProductFeature" Title="StartCondition" Level="1">
+            <ComponentGroupRef Id="ProductComponents" />
+        </Feature>
 
         <InstallUISequence>
             <!-- The custom action is making the actual verification and is setting the result "yes" or "no" in the IS_CONDITION_TRUE property. -->
@@ -65,5 +71,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <Custom Action="SystemTimeVerification" Before="LaunchConditions">NOT Installed</Custom>
         </InstallExecuteSequence>
 
-	</Product>
+    </Product>
 </Wix>
