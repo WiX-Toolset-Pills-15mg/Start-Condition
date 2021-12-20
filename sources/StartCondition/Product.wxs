@@ -35,41 +35,47 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
         <MediaTemplate />
 
-        <Property Id="IS_CONDITION_TRUE" Value="no" />
-
-        <Condition Message="The time is odd. The installer will not continue.">
-            <!-- This condition will let the installer continue only if the value inside the body is true. -->
+        <Condition Message="Sorry, you are not allowed to install the product.">
             <!--
-            The intention is to run this check only on the installation scenario.
-            So, if the application is already installed, the condition should be automatically true.
+            ====================================================================================================
+            Step 1: Create the condition
+            ====================================================================================================
+        
+            In this example, the condition is based on the "ALLOW_TO_INSTALL" property (see below in this file):
+                - if it is "yes", the installer is allowed to continue;
+                - any other value will prevent the installer to continue.
+            
+            The property should be verified only if we are on the installation scenario.
+            We should always allow to uninstall the product.
             This is done by the "Installed OR (NOT Installed AND (...))" part.
+            
+            If the condition is false, the text from the "Message" attribute is displayed to the user.
+            
+            END
             -->
-            <![CDATA[Installed OR (NOT Installed AND (IS_CONDITION_TRUE = "yes"))]]>
+
+            <![CDATA[Installed OR (NOT Installed AND (ALLOW_TO_INSTALL = "yes"))]]>
         </Condition>
 
-        <Feature Id="ProductFeature" Title="StartCondition" Level="1">
+        <!--
+        ====================================================================================================
+        Step 2: Create the "ALLOW_TO_INSTALL" property
+        ====================================================================================================
+            
+        This variable will control if the product is allowed to be installed or not.
+        Note: The variable is upper case in order to be considered public and allow it to be set from command line.
+        
+        Go To: Product.wxs (above in this file)
+        -->
+        <Property Id="ALLOW_TO_INSTALL" Value="yes" />
+
+        <Feature
+            Id="ProductFeature"
+            Title="StartCondition"
+            Level="1">
+
             <ComponentGroupRef Id="ProductComponents" />
         </Feature>
-
-        <InstallUISequence>
-            <!-- The custom action is making the actual verification and is setting the result "yes" or "no" in the IS_CONDITION_TRUE property. -->
-            <!--
-            It is needed to run the custom action on client side and set the IS_CONDITION_TRUE property before the conditions are checked.
-            That is before the LaunchConditions custom action is executed.
-            
-            Note: The LaunchConditions custom action is automatically added by WiX.
-            -->
-            <Custom Action="SystemTimeVerification" Before="LaunchConditions">NOT Installed</Custom>
-        </InstallUISequence>
-
-        <InstallExecuteSequence>
-            <!-- It is also needed to run the custom action on server side for the situation when the installer is run in quiet mode, without GUI. -->
-            <!--
-            Running the custom action on server side is unnecessary if the application is started with GUI. It will just do same thing again. Waste of processor power and time.
-            To prevent running the custom action twice in this situation, see the ConditionVerification.wxs file. It is there where the trick is implemented.
-            -->
-            <Custom Action="SystemTimeVerification" Before="LaunchConditions">NOT Installed</Custom>
-        </InstallExecuteSequence>
 
     </Product>
 </Wix>
