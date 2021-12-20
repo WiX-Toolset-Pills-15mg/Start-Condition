@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "StartCondition", "StartCondition\StartCondition.wixproj", "{C0000DFD-4974-4845-A356-3BEC236863C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartCondition.CustomActions", "StartCondition.CustomActions\StartCondition.CustomActions.csproj", "{8EF7630C-1F58-4C98-BF57-C4C06F02ED4F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -17,10 +15,6 @@ Global
 		{C0000DFD-4974-4845-A356-3BEC236863C7}.Debug|x86.Build.0 = Debug|x86
 		{C0000DFD-4974-4845-A356-3BEC236863C7}.Release|x86.ActiveCfg = Release|x86
 		{C0000DFD-4974-4845-A356-3BEC236863C7}.Release|x86.Build.0 = Release|x86
-		{8EF7630C-1F58-4C98-BF57-C4C06F02ED4F}.Debug|x86.ActiveCfg = Debug|x86
-		{8EF7630C-1F58-4C98-BF57-C4C06F02ED4F}.Debug|x86.Build.0 = Debug|x86
-		{8EF7630C-1F58-4C98-BF57-C4C06F02ED4F}.Release|x86.ActiveCfg = Release|x86
-		{8EF7630C-1F58-4C98-BF57-C4C06F02ED4F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
