@@ -45,16 +45,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 - if it is "yes", the installer is allowed to continue;
                 - any other value will prevent the installer to continue.
             
-            The property should be verified only if we are on the installation scenario.
-            We should always allow to uninstall the product.
-            This is done by the "Installed OR (NOT Installed AND (...))" part.
-            
             If the condition is false, the text from the "Message" attribute is displayed to the user.
             
             END
             -->
 
-            <![CDATA[Installed OR (NOT Installed AND (ALLOW_TO_INSTALL = "yes"))]]>
+            <![CDATA[ALLOW_TO_INSTALL = "yes"]]>
         </Condition>
 
         <!--
@@ -63,7 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         ====================================================================================================
             
         This variable will control if the product is allowed to be installed or not.
-        Note: The variable is upper case in order to be considered public and allow it to be set from command line.
+        Note: The variable is upper case in order to be considered "public" and allow it to be provided from command line.
         
         Go To: Product.wxs (above in this file)
         -->
