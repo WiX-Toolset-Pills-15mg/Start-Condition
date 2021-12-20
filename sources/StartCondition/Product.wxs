@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <Condition Message="Sorry, you are not allowed to install the product.">
             <!--
             ====================================================================================================
-            Step 1: Create the condition
+            Step 2: Create the condition
             ====================================================================================================
         
             In this example, the condition is based on the "ALLOW_TO_INSTALL" property (see below in this file):
@@ -59,7 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <!--
         ====================================================================================================
-        Step 2: Create the "ALLOW_TO_INSTALL" property
+        Step 1: Create the "ALLOW_TO_INSTALL" property
         ====================================================================================================
             
         This variable will control if the product is allowed to be installed or not.
