@@ -35,6 +35,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
         <MediaTemplate />
 
+        <!--
+        ====================================================================================================
+        Step 1: Create the "ALLOW_TO_INSTALL" property
+        ====================================================================================================
+            
+        This variable will control if the product is allowed to be installed or not.
+        Note: The variable is upper case in order to be considered "public" and allow it to be provided from command line.
+        
+        Go To: Product.wxs (above in this file)
+        -->
+        <Property Id="ALLOW_TO_INSTALL" Value="yes" />
+
         <Condition Message="Sorry, you are not allowed to install the product.">
             <!--
             ====================================================================================================
@@ -52,18 +64,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <![CDATA[ALLOW_TO_INSTALL = "yes"]]>
         </Condition>
-
-        <!--
-        ====================================================================================================
-        Step 1: Create the "ALLOW_TO_INSTALL" property
-        ====================================================================================================
-            
-        This variable will control if the product is allowed to be installed or not.
-        Note: The variable is upper case in order to be considered "public" and allow it to be provided from command line.
-        
-        Go To: Product.wxs (above in this file)
-        -->
-        <Property Id="ALLOW_TO_INSTALL" Value="yes" />
 
         <Feature
             Id="ProductFeature"
