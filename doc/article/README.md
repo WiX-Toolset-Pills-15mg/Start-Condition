@@ -6,13 +6,15 @@ Sometimes we must check some condition before proceeding with the installation o
 
 WiX Toolset offers the `<Condition>` element that can help us in this scenario.
 
-## Prerequisite
+## Implementation
 
-Create a WiX Toolset installer project that deploys a single file.
+### Step 0 - Create the installer project
 
-- See the [My First Installer](https://github.com/WiX-Toolset-Pills-15mg/My-First-Installer) tutorial for an example.
+Create a simple installer project that deploys a single dummy file. Let's call the project `ImmediateCustomAction`.
 
-## Step 1 - Create the `ALLOW_TO_INSTALL` property
+See the [My First Installer](https://github.com/WiX-Toolset-Pills-15mg/My-First-Installer) tutorial for an example.
+
+### Step 1 - Create the `ALLOW_TO_INSTALL` property
 
 First of all, let's create a simple "public" property called `ALLOW_TO_INSTALL`:
 
@@ -24,7 +26,7 @@ This property will be used, later, in the condition expression that will decide 
 
 **Note:** The property is all upper case, in order to be considered "public" and allow us to pass it from command line.
 
-## Step 2 - Create the `<Condition>` element
+### Step 2 - Create the `<Condition>` element
 
 Let's take an example:
 
@@ -36,7 +38,7 @@ Let's take an example:
 
 The way the condition works in WiX Toolset may be a little bit unintuitive. For example, the first time I wrote a condition in WiX Toolset, I was expecting to write the condition for stopping the installer. I was thinking like in C# where, in a similar situation I write the condition and throw an exception if it is not fulfilled, in order to stop the execution of the use case.
 
-### The `LaunchConditions` custom action
+#### The `LaunchConditions` custom action
 
 On the other hand, in WiX Toolset, we, usually, don't write the instructions ourselves. Instead, we configure the execution of some already existing modules. In our particular situation the job of checking the start conditions is performed by the `LaunchConditions` custom action included automatically by WiX Toolset in the execution sequence. We just need to configure that custom action and we do that with the `<Condition>` element.
 
@@ -50,15 +52,15 @@ Line 237: Action start 07:53:22: LaunchConditions.
 
 It will evaluate the provided expression and stop the execution if it is `false`.
 
-### The condition expression
+#### The condition expression
 
 The body of the `<Condition>` element contains the condition itself that must be fulfilled in order for the installer to proceed further. In our example we used the `ALLOW_TO_INSTALL` property and we allow to proceed only if it has the value `yes`.
 
-### The message
+#### The message
 
 The `Message` attribute contains the text displayed to the user when the condition is not fulfilled.
 
-## Step 3 - Compile and run
+### Step 3 - Install not allowed
 
 After compile, run the installer:
 
@@ -67,6 +69,20 @@ msiexec /i StartCondition.msi /l*vx install.log ALLOW_TO_INSTALL=no
 ```
 
 This will set the `ALLOW_TO_INSTALL` property to `no` and the installer will display a popup with the `Sorry, you are not allowed to install the product.` message.
+
+![Client Side Condition - Fail](client-side-condition-fail.png)
+
+Please note that the condition was checked by the client application and did not start the server application.
+
+### Step 4 - Install with success
+
+When running the installer without the `ALLOW_TO_INSTALL` argument, the installation is successful.
+
+![Client Side Condition - Success](client-side-condition-success.png)
+
+Please note that the condition was checked by both the client and server applications.
+
+![Server Side Condition - Success](server-side-condition-success.png)
 
 ## Final Notes
 

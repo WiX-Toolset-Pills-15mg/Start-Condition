@@ -2,7 +2,7 @@
 
 <!--
 WiX Toolset Pills 15mg
-Copyright (C) 2019-2021 Dust in the Wind
+Copyright (C) 2019-2022 Dust in the Wind
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,6 +16,29 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!--
+====================================================================================================
+START: Overview
+====================================================================================================
+    
+This example demonstrates how to prevent the installer to run if some conditions are not fulfilled.
+The condition is calculated based on a public property that can be provided from command line.
+
+NEXT: Product.wxs (DOWN)
+-->
+
+<!--
+====================================================================================================
+Step 0:  Create the installer project
+====================================================================================================
+    
+Create a simple installer project that deploys a single dummy file. Let's call the project `ImmediateCustomAction`.
+See the "My First Installer" tutorial for an example:
+    - https://github.com/WiX-Toolset-Pills-15mg/My-First-Installer
+
+NEXT: Product.wxs (DOWN)
 -->
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
@@ -41,27 +64,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         ====================================================================================================
             
         This variable will control if the product is allowed to be installed or not.
-        Note: The variable is upper case in order to be considered "public" and allow it to be provided from command line.
         
-        Go To: Product.wxs (above in this file)
+        Note: The variable is upper case in order to be considered "public" and allow it to be provided
+              from command line.
+        
+        NEXT: Product.wxs (DOWN)
         -->
+
         <Property Id="ALLOW_TO_INSTALL" Value="yes" />
 
-        <Condition Message="Sorry, you are not allowed to install the product.">
-            <!--
-            ====================================================================================================
-            Step 2: Create the condition
-            ====================================================================================================
+        <!--
+        ====================================================================================================
+        Step 2: Create the <Condition> element
+        ====================================================================================================
+    
+        In this example, the condition is based on the "ALLOW_TO_INSTALL" property (see below in this file):
+            - if it is "yes", the installer is allowed to continue;
+            - any other value will prevent the installer to continue.
         
-            In this example, the condition is based on the "ALLOW_TO_INSTALL" property (see below in this file):
-                - if it is "yes", the installer is allowed to continue;
-                - any other value will prevent the installer to continue.
-            
-            If the condition is false, the text from the "Message" attribute is displayed to the user.
-            
-            END
-            -->
+        If the condition is false, the text from the "Message" attribute is displayed to the user.
+        
+        END
+        -->
 
+        <Condition Message="Sorry, you are not allowed to install the product.">
             <![CDATA[ALLOW_TO_INSTALL = "yes"]]>
         </Condition>
 

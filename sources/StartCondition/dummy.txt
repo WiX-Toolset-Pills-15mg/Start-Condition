@@ -1,7 +1,10 @@
-WiX Toolset Pills - Start Condition
-==============================================================================
+WiX Toolset Pills 15mg - Start Condition
+====================================================================================================
 
-This file is part of the "Start Condition" tutorial that demonstrates how to check prerequisites before allowing the installation.
+This file is part of the "Start Condition" pill.
+
+The tutorial demonstrates how to check prerequisites before allowing the installation.
+If the condition is false, the installer displays an error message and stops.
 
 For more details please chech the GitHub repository:
 https://github.com/WiX-Toolset-Pills-15mg/Start-Condition
